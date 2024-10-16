@@ -1,20 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import { StatusBar } from 'react-native';
+import 'react-native-gesture-handler';
+import Toast from 'react-native-toast-message';
+import fonts from './src/config/fonts';
+import Routes from './src/routes/Routes';
 
 export default function App() {
+  const [fontsLoaded] = useFonts(fonts);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar backgroundColor="#FE8330" barStyle="light-content" />
+      <NavigationContainer>
+        <Routes />
+        <Toast />
+      </NavigationContainer>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

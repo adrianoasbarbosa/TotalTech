@@ -9,7 +9,15 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffffff",
+      "plugins": [
+        [
+          "expo-image-picker",
+          {
+            "photosPermission": "The app accesses your photos to let you share them with your friends."
+          }
+        ]
+      ]
     },
     "ios": {
       "supportsTablet": true
@@ -18,10 +26,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.adrianobarbosa.TotalTech"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2dd46121-bcbb-410f-9cd1-cd8f218bf2d9"
+      }
     }
   }
 }
