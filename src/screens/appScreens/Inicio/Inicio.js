@@ -79,7 +79,7 @@ export default function Inicio({ navigation }) {
 
                 <FlatList
                     data={DATA}
-                    renderItem={({ item, index }) => (
+                    renderItem={({ item }) => (
                         <View
                             style={{
                                 width: 350,
@@ -107,10 +107,9 @@ export default function Inicio({ navigation }) {
                         marginLeft: -13
                     }}
                     pagingEnabled
-                    viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs}
                     horizontal
                     showsHorizontalScrollIndicator={false}
-                    keyExtractor={(item, index) => String(index)}
+                    keyExtractor={(item, index) => String(index)} // Aqui você pode trocar por item.id se tiver IDs únicos
                 />
 
                 {/* Seção de categorias */}
@@ -140,7 +139,7 @@ export default function Inicio({ navigation }) {
                             <TouchableOpacity
                                 key={product.id} // Usar o ID do produto como chave
                                 style={styles.productCard}
-                                onPress={() => navigation.navigate('ProductItem', { productId: product.id })} // Passa o ID do produto
+                                onPress={() => navigation.navigate('Produtos', { productId: product.id })} // Passa o ID do produto
                             >
                                 <Image
                                     source={{ uri: product.images[0] }}

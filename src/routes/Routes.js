@@ -14,6 +14,8 @@ import Login from '../screens/authScreens/Login/Login';
 import RecuperarSenha from '../screens/authScreens/Login/RecuperarSenha/RecuperarSenha';
 import OnBoarding from '../screens/authScreens/OnBoarding/OnBoarding';
 import Splash from '../screens/splashScreens/Splash/Splash';
+import Favoritos from '../screens/appScreens/Perfil/Favoritos/Favoritos';
+import Produtos from '../components/Produtos/Produtos';
 
 const Stack = createStackNavigator();
 
@@ -28,8 +30,8 @@ export default function Routes() {
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Cadastro" component={Cadastro} />
             <Stack.Screen name="RecuperarSenha" component={RecuperarSenha} />
-
-
+            <Stack.Screen name="Favoritos" component={Favoritos} />
+            <Stack.Screen name="Produtos" component={Produtos} />
             <Stack.Screen name="DrawerApp" component={DrawerApp} />
         </Stack.Navigator>
     )
