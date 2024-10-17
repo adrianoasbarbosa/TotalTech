@@ -67,28 +67,7 @@ export default function Perfil({ navigation }) {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.menuItem}
-                    onPress={() => navigation.navigate('MeusAnúncio')} // Adicione navegação
-                >
-                    <AntDesign name="profile" size={30} color="#000" />
-                    <Text style={styles.menuItemText}>Meus Anúncios</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.menuItem}
-                    onPress={() => navigation.navigate('MinhasCompras')} // Adicione navegação
-                >
-                    <AntDesign name="shoppingcart" size={30} color="#000" />
-                    <Text style={styles.menuItemText}>Minhas Compras</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.menuItem}
-                    onPress={() => navigation.navigate('Favoritos')} // Adicione navegação
-                >
-                    <AntDesign name="hearto" size={30} color="#000" />
-                    <Text style={styles.menuItemText}>Favoritos</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.menuItem}
-                    onPress={() => navigation.navigate('CentralAjuda')} // Adicione navegação
+                    onPress={() => navigation.navigate('Ajuda')} // Adicione navegação
                 >
                     <AntDesign name="customerservice" size={30} color="#000" />
                     <Text style={styles.menuItemText}>Central de Ajuda</Text>

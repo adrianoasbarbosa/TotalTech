@@ -76,17 +76,16 @@ export default function Inicio({ navigation }) {
                         <Text style={styles.cepText}>Informe seu CEP</Text>
                     </View>
                 </View>
-
                 <FlatList
                     data={DATA}
                     renderItem={({ item }) => (
                         <View
                             style={{
-                                width: 350,
-                                alignItems: 'center',
-                                height: 180,
-                                borderRadius: 30,
-                                marginHorizontal: 40
+                                width: 370,       // Tamanho fixo para todos os banners
+                                height: 150,      // Altura ajustada para todos os banners
+                                borderRadius: 10, // Ajusta o borderRadius para 10
+                                marginHorizontal: 15,
+                                overflow: 'hidden', // Garante que o conteúdo respeite o borderRadius
                             }}
                         >
                             <Image
@@ -94,25 +93,27 @@ export default function Inicio({ navigation }) {
                                 style={{
                                     width: '100%',
                                     height: '100%',
-                                    borderRadius: 30,
+                                    borderRadius: 10, // Aplica o borderRadius de 10 no Image também
                                 }}
-                                resizeMode='contain'
+                                resizeMode='cover' // Ajusta o modo de redimensionamento para cobrir todo o espaço
                             />
                         </View>
                     )}
                     style={{
-                        paddingTop: 20,
+                        paddingTop: 30,
+                        paddingBottom: 30
                     }}
                     contentContainerStyle={{
-                        marginLeft: -13
+                        marginLeft: 10,
+                        paddingRight: 28 // Adiciona um espaço extra à direita do último item
                     }}
                     pagingEnabled
                     horizontal
                     showsHorizontalScrollIndicator={false}
                     keyExtractor={(item, index) => String(index)} // Aqui você pode trocar por item.id se tiver IDs únicos
+                    ListFooterComponent={<View style={{ width: 10 }} />} // Adiciona um espaço extra ao final da lista
                 />
 
-                {/* Seção de categorias */}
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoriesContainer}>
                     <View style={styles.category}>
                         <Image source={require('../../../../assets/images/1.png')} style={styles.categoryImage} />

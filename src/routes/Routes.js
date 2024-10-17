@@ -4,9 +4,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 
 import CustomDrawer from '../components/CustomDrawer';
+import Produtos from '../components/Produtos/Produtos';
 import Ajuda from '../screens/appScreens/Ajuda/Ajuda';
 import Anunciar from '../screens/appScreens/Anunciar/Anunciar';
 import Inicio from '../screens/appScreens/Inicio/Inicio';
+import MinhaConta from '../screens/appScreens/Perfil/MinhaConta/MinhaConta';
 import Perfil from '../screens/appScreens/Perfil/Perfil';
 import Tutorial from '../screens/appScreens/Tutorial/Tutorial';
 import Cadastro from '../screens/authScreens/Cadastro/Cadastro';
@@ -14,8 +16,6 @@ import Login from '../screens/authScreens/Login/Login';
 import RecuperarSenha from '../screens/authScreens/Login/RecuperarSenha/RecuperarSenha';
 import OnBoarding from '../screens/authScreens/OnBoarding/OnBoarding';
 import Splash from '../screens/splashScreens/Splash/Splash';
-import Favoritos from '../screens/appScreens/Perfil/Favoritos/Favoritos';
-import Produtos from '../components/Produtos/Produtos';
 
 const Stack = createStackNavigator();
 
@@ -30,8 +30,8 @@ export default function Routes() {
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Cadastro" component={Cadastro} />
             <Stack.Screen name="RecuperarSenha" component={RecuperarSenha} />
-            <Stack.Screen name="Favoritos" component={Favoritos} />
             <Stack.Screen name="Produtos" component={Produtos} />
+            <Stack.Screen name="MinhaConta" component={MinhaConta} />
             <Stack.Screen name="DrawerApp" component={DrawerApp} />
         </Stack.Navigator>
     )
