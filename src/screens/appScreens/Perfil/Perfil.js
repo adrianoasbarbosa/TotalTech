@@ -2,12 +2,13 @@ import { AntDesign } from '@expo/vector-icons';
 import { getAuth, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import { Alert, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Modal, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { db } from '../../../config/firebaseConfig';
 
 export default function Perfil({ navigation }) {
 
     const [userInfo, setUserInfo] = useState({ apelido: '', email: '' });
+    const [modalVisible, setModalVisible] = useState(false); // Controle do modal
     const auth = getAuth();
     const user = auth.currentUser;
 
@@ -34,17 +35,14 @@ export default function Perfil({ navigation }) {
             navigation.navigate('OnBoarding'); // Redireciona para a tela de login após o logout
         } catch (error) {
             console.error('Erro ao sair:', error);
-            Alert.alert('Erro', 'Não foi possível desconectar. Tente novamente mais tarde.'); // Apenas exibe um erro se houver
+            Alert.alert('Erro', 'Não foi possível desconectar. Tente novamente mais tarde.');
         }
     };
-
-
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
                 <View style={styles.header}>
-                    {/* Botão de voltar */}
                     <TouchableOpacity
                         style={styles.backButton}
                         onPress={() => navigation.goBack()}
@@ -67,26 +65,42 @@ export default function Perfil({ navigation }) {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.menuItem}
-                    onPress={() => navigation.navigate('Ajuda')} // Adicione navegação
-                >
-                    <AntDesign name="customerservice" size={30} color="#000" />
-                    <Text style={styles.menuItemText}>Central de Ajuda</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.menuItem}
-                    onPress={() => navigation.navigate('TermoUso')} // Adicione navegação
+                    onPress={() => setModalVisible(true)} // Mostra o modal ao clicar
                 >
                     <AntDesign name="filetext1" size={30} color="#000" />
                     <Text style={styles.menuItemText}>Termo de Uso</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.menuItem}
-                    onPress={handleLogout} // Adicione a função de logout
+                    onPress={handleLogout}
                 >
                     <AntDesign name="logout" size={30} color="#000" />
                     <Text style={styles.menuItemText}>Sair</Text>
                 </TouchableOpacity>
             </View>
+
+            {/* Modal simples dos Termos de Uso */}
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)} // Fecha o modal
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalTitle}>Termos de Uso</Text>
+                        <Text style={styles.modalText}>
+                            Ao utilizar o app TotalTech, você concorda com os termos de uso e condições estabelecidas.
+                        </Text>
+                        <TouchableOpacity
+                            style={styles.closeButton}
+                            onPress={() => setModalVisible(false)}
+                        >
+                            <Text style={styles.closeButtonText}>Fechar</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 };
@@ -128,5 +142,38 @@ const styles = StyleSheet.create({
     menuItemText: {
         fontSize: 16,
         marginLeft: 20,
+    },
+    modalOverlay: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 10,
+        width: '80%',
+        alignItems: 'center',
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    modalText: {
+        fontSize: 14,
+        textAlign: 'center',
+        marginBottom: 20,
+    },
+    closeButton: {
+        backgroundColor: '#FF7F27',
+        padding: 10,
+        borderRadius: 10,
+    },
+    closeButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
 });

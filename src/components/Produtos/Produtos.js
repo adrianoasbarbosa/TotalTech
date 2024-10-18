@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Share, SafeAreaView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { doc, getDoc } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { Image, SafeAreaView, ScrollView, Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { db } from '../../config/firebaseConfig';
 
 export default function Produtos({ route, navigation }) {
@@ -22,14 +23,13 @@ export default function Produtos({ route, navigation }) {
                         sellerSince: productData.sellerSince ? productData.sellerSince.toDate().toLocaleDateString() : "Data não disponível" // Verifica se existe
                     });
 
-                    // Busca o nome do anunciante com base no userId
-                    if (productData.userId) {
-                        const userDoc = await getDoc(doc(db, 'Usuarios', productData.userId));
-                        if (userDoc.exists()) {
-                            setSellerName(userDoc.data().name); // Define o nome do anunciante
-                        } else {
-                            console.log("Anunciante não encontrado");
-                        }
+                    // Busca o nome do anunciante com base no userId fornecido
+                    const userId = productData.userId || "oxxsH6xRoDbJ9oxIZeUhr7t1TKy1"; // userId padrão se não vier do produto
+                    const userDoc = await getDoc(doc(db, 'Users', userId));
+                    if (userDoc.exists()) {
+                        setSellerName(userDoc.data().name); // Define o nome do anunciante
+                    } else {
+                        console.log("Anunciante não encontrado");
                     }
                 } else {
                     console.log("Produto não encontrado");
@@ -65,6 +65,14 @@ export default function Produtos({ route, navigation }) {
             </View>
         );
     }
+    const handleInterest = () => {
+        Toast.show({
+            type: 'success',
+            text1: 'Interesse salvo!',
+            text2: 'Interesse salvo com sucesso!',
+            position: 'bottom',
+        });
+    };
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -103,13 +111,6 @@ export default function Produtos({ route, navigation }) {
                     <Text style={styles.readMoreButtonText}>Ver descrição completa</Text>
                 </TouchableOpacity>
 
-                {/* Localização */}
-                <Text style={styles.sectionTitle}>Localização</Text>
-                <View style={styles.locationContainer}>
-                    <Text style={styles.locationLabel}>CEP: {product.zipCode}</Text>
-                    <Text style={styles.locationLabel}>Cidade: {product.city}</Text>
-                    <Text style={styles.locationLabel}>Bairro: {product.neighborhood}</Text>
-                </View>
 
                 {/* Anunciante */}
                 <Text style={styles.sectionTitle}>Anunciante</Text>
@@ -119,8 +120,8 @@ export default function Produtos({ route, navigation }) {
                 </View>
 
                 {/* Botão de Chat */}
-                <TouchableOpacity style={styles.chatButton}>
-                    <Text style={styles.chatButtonText}>Chat</Text>
+                <TouchableOpacity style={styles.chatButton} onPress={handleInterest}>
+                    <Text style={styles.chatButtonText}>Tenho Interesse</Text>
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
@@ -249,7 +250,8 @@ const styles = StyleSheet.create({
         padding: 16,
         borderRadius: 10,
         backgroundColor: '#FF6F00',
-        marginHorizontal: 16,
+        marginHorizontal: 28,
+        marginVertical: 20
     },
     chatButtonText: {
         fontSize: 14,

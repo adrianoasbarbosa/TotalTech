@@ -32,6 +32,7 @@ export default function Routes() {
             <Stack.Screen name="RecuperarSenha" component={RecuperarSenha} />
             <Stack.Screen name="Produtos" component={Produtos} />
             <Stack.Screen name="MinhaConta" component={MinhaConta} />
+            <Stack.Screen name="Inicio" component={Inicio} />
             <Stack.Screen name="DrawerApp" component={DrawerApp} />
         </Stack.Navigator>
     )

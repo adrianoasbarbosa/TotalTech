@@ -158,24 +158,9 @@ export default function Inicio({ navigation }) {
                     <Text style={styles.sectionTitle}>Mais vistos no mundo em Placas Mãe</Text>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                         <TouchableOpacity style={styles.productCard} onPress={() => navigation.navigate('DetalhesProduto', { productId: 5 })}>
-                            <Image source={{ uri: 'https://via.placeholder.com/100' }} style={styles.productImage} />
-                            <Text style={styles.productName}>Placa Mãe A</Text>
+                            <Image source={require('../../../../assets/images/placamae1.png')} style={styles.productImage} />
+                            <Text style={styles.productName}>Placa Mãe Assus</Text>
                             <Text style={styles.productPrice}>R$ 299,90</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.productCard} onPress={() => navigation.navigate('DetalhesProduto', { productId: 6 })}>
-                            <Image source={{ uri: 'https://via.placeholder.com/100' }} style={styles.productImage} />
-                            <Text style={styles.productName}>Placa Mãe B</Text>
-                            <Text style={styles.productPrice}>R$ 249,90</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.productCard} onPress={() => navigation.navigate('DetalhesProduto', { productId: 7 })}>
-                            <Image source={{ uri: 'https://via.placeholder.com/100' }} style={styles.productImage} />
-                            <Text style={styles.productName}>Placa Mãe C</Text>
-                            <Text style={styles.productPrice}>R$ 329,90</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.productCard} onPress={() => navigation.navigate('DetalhesProduto', { productId: 8 })}>
-                            <Image source={{ uri: 'https://via.placeholder.com/100' }} style={styles.productImage} />
-                            <Text style={styles.productName}>Placa Mãe D</Text>
-                            <Text style={styles.productPrice}>R$ 279,90</Text>
                         </TouchableOpacity>
                     </ScrollView>
                 </View>

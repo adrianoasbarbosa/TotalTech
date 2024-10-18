@@ -1,13 +1,22 @@
 import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import React, { useState } from 'react';
-import { Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { getAuth, updateEmail, updatePassword } from 'firebase/auth';
+import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { Alert, Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { db } from '../../../../config/firebaseConfig';
 
 export default function MinhaConta({ navigation }) {
-    const [name, setName] = useState('');
+    const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [image, setImage] = useState(null);
+    const [senha, setSenha] = useState('');
+    const [image, setImage] = useState(null);  // Definindo o estado da imagem
+
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const usersCollection = collection(db, "Users");
+    const userId = user.uid;
+    const userDocRef = doc(usersCollection, userId);
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -19,6 +28,68 @@ export default function MinhaConta({ navigation }) {
 
         if (!result.canceled) {
             setImage(result.assets[0].uri);
+        }
+    };
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const userDoc = await getDoc(userDocRef);
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    setNome(userData.apelido || '');
+                    setEmail(userData.email || '');
+                    setSenha(userData.senha || '');
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
+    const handleSaveNome = async () => {
+        try {
+            await updateDoc(userDocRef, {
+                apelido: nome  // Aqui usamos o estado 'nome'
+            });
+            Alert.alert('Nome atualizado com sucesso');
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+
+    const handleSaveEmail = async () => {
+        try {
+            await updateEmail(auth.currentUser, email);
+            console.log('Email Updated Successfully');
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleSaveSenha = async () => {
+        try {
+            await updatePassword(auth.currentUser, senha);
+            await updateDoc(userDocRef, {
+                senha: senha
+            });
+            Alert.alert('Password Updated Successfully');
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleSaveAll = async () => {
+        try {
+            await handleSaveNome();
+            await handleSaveEmail();
+            await handleSaveSenha();
+            Alert.alert('All updates were successful');
+        } catch (error) {
+            console.error('Error updating information:', error);
         }
     };
 
@@ -50,15 +121,15 @@ export default function MinhaConta({ navigation }) {
                 <Text style={styles.label}>Nome</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="Alterar Nome"
-                    value={name}
-                    onChangeText={setName}
+                    placeholder={nome ? nome : "Alterar Nome"}
+                    value={nome}
+                    onChangeText={setNome}
                 />
 
                 <Text style={styles.label}>Email</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="exemplo@gmail.com"
+                    placeholder={email ? email : "exemplo@gmail.com"}
                     value={email}
                     onChangeText={setEmail}
                     keyboardType="email-address"
@@ -68,18 +139,18 @@ export default function MinhaConta({ navigation }) {
                 <TextInput
                     style={styles.input}
                     placeholder="********"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
+                    value={senha}
+                    onChangeText={setSenha}
                 />
 
-                <TouchableOpacity style={styles.confirmButton}>
+                <TouchableOpacity style={styles.confirmButton} onPress={handleSaveAll}>
                     <Text style={styles.confirmButtonText}>Confirmar Alterações</Text>
                 </TouchableOpacity>
             </View>
         </View>
     );
 }
+
 
 const styles = StyleSheet.create({
     container: {

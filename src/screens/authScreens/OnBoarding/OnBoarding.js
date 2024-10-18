@@ -9,14 +9,6 @@ export default function OnBoarding({ navigation }) {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-            <View style={styles.linkContainer}>
-                <TouchableOpacity
-                    onPress={() => navigation.navigate("DrawerApp")}
-                >
-                    <Text style={styles.enterWithoutAccount}>Entrar sem cadastrar</Text>
-                </TouchableOpacity>
-            </View>
-
             <View style={styles.container}>
                 <ImageBackground
                     style={styles.image}
